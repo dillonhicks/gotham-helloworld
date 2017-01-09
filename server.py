@@ -1,4 +1,5 @@
 """Python Stub implementation of echoexample"""
+import sys
 from concurrent import futures
 import pkg_resources
 import time
@@ -40,9 +41,11 @@ def serve(port, with_proxy_server=False):
     server.start()
 
     proxy_process = None
+    proxy_filepath = pkg_resources.resource_filename('echoexample', 'bin/rest-proxy-server.bin')
+    if sys.platform.lower() == 'darwin':
+        '.'.join([proxy_filepath, 'darwin'])
 
     try:
-        proxy_filepath = pkg_resources.resource_filename('echoexample', 'bin/rest-proxy-server.bin')
         if with_proxy_server:
             proxy_process = Popen([proxy_filepath])
         while True:

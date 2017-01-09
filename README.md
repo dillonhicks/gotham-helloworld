@@ -43,5 +43,12 @@ After a successful `make compile` the build directory should contain:
   for all of the services contained in the protos directory.
 
 - A python package with:
-  - pb generated python files for protocol buffer message
-  - The grpc
+  - pb generated python models for protocol buffer messages
+  - The grpc server stubs
+  - Compiled grpc rest proxy gateway binaries for mac and linux
+  - Generated clients and rest client wrappers
+
+
+- Server stubs `gotham-helloworld/build/python/server-stubs.py` that
+  contain generated hooks to get you started. `gotham-helloworld/server.py`
+  which is started
