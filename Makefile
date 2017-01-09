@@ -38,3 +38,9 @@ runserver:
 testserver:
 	curl http://localhost:9090/v1/echo/Sir/Good%20Day
 	@echo
+	curl http://localhost:9090/v1/echo/Potato/Die
+	@echo
+	curl http://localhost:9090/v1/echo/!!!!/dasf
+	@echo
+	curl http://localhost:9090/v1/echo/World/Hello
+	@echo
