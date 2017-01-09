@@ -14,7 +14,11 @@ all:
 	$(error You must explicitly use 'make compile')
 
 
-compile:
+image:
+	docker pull dillonhicks/gotham:latest
+
+
+compile: image
 	@echo === Build Variables ===
 	@echo $(BUILD_VARS) | xargs -n1 echo
 	@echo =======================
