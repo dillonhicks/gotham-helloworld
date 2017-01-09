@@ -43,7 +43,7 @@ def serve(port, with_proxy_server=False):
     proxy_process = None
     proxy_filepath = pkg_resources.resource_filename('echoexample', 'bin/rest-proxy-server.bin')
     if sys.platform.lower() == 'darwin':
-        '.'.join([proxy_filepath, 'darwin'])
+        proxy_filepath = '.'.join([proxy_filepath, 'darwin'])
 
     try:
         if with_proxy_server:
