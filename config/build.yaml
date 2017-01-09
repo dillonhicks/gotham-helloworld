@@ -1,0 +1,6 @@
+name: echoexample
+version: 1.0.0
+author: Dillon Hicks
+author_email: dillon@dillonhicks.io
+project_url: https://github.com/dillonhicks/gotham-helloworld
+default_port: 8080
