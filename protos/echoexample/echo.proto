@@ -2,6 +2,7 @@ syntax = "proto3";
 option py_generic_services = true;
 
 import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
 
 package echoexample;
 
@@ -17,6 +18,25 @@ message HelloResponse {
 }
 
 
+message UserMessage {
+        string user = 1;
+        string text = 2;
+}
+
+message ChatRequest {
+    oneof payload {
+        UserMessage message = 1;
+        google.protobuf.Empty ping =2;
+    }
+}
+
+
+message ChatResponse {
+    repeated  UserMessage messages = 1;
+}
+
+
+
 service Echo {
 
     rpc Hello(HelloRequest) returns (HelloResponse) {
@@ -24,5 +44,13 @@ service Echo {
             get: "/v1/echo/{name}/{greeting}"
         };
     }
+
+
+    rpc Chat(stream ChatRequest) returns (stream ChatResponse) {
+        option (google.api.http) = {
+            get: "/v1/chat"
+        };
+    }
+
 
 }

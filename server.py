@@ -14,13 +14,19 @@ from echoexample import echo_pb2, echo_pb2_grpc
 from echoexample.echo_pb2 import (
     HelloRequest,
     HelloResponse,
+    ChatResponse
 )
+
+from collections import deque, defaultdict
 
 
 LOG = logging.getLogger(__name__)
 
 
 class Echo(echo_pb2_grpc.EchoServicer):
+    def __init__(self):
+        self.messages_by_user = defaultdict(list)
+
 
     def Hello(self, request, context):
         # type: (HelloRequest, grpc.RpcContext) -> HelloResponse
@@ -29,6 +35,18 @@ class Echo(echo_pb2_grpc.EchoServicer):
         response =  HelloResponse()
         response.message = '{}, {}!'.format(request.greeting, request.name)
         return response
+
+    def Chat(self, request_iterator, context):
+        for new_message in request_iterator:
+            queue = self.messages_by_user[new_message.message.user]
+            if new_message.WhichOneof('payload') == 'message':
+                for user in self.messages_by_user:
+                    self.messages_by_user[user].append(new_message.message)
+            r = ChatResponse()
+            r.messages.extend(queue)
+            queue.clear()
+            yield r
+
 
 
 def serve(port, with_proxy_server=False):
